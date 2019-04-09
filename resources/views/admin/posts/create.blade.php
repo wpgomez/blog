@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label>Contenido publicación</label>
-                        <textarea rows="10" name="body" class="form-control" placeholder="Ingresa el contenido completo de la publicación"></textarea>
+                        <textarea rows="10" name="body" id="editor" class="form-control" placeholder="Ingresa el contenido completo de la publicación"></textarea>
                     </div>
                 </div>
             </div>
@@ -51,6 +51,16 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Etiquetas</label>
+                        <select class="form-control select2" 
+                            multiple="multiple" 
+                            data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>    
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Extracto publicación</label>
                         <textarea name="excerpt" class="form-control" placeholder="Ingresa un extracto de la publicación"></textarea>
                     </div>
@@ -66,13 +76,18 @@
 
 @push('styles')
     <link rel="stylesheet" href="/adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
 @endpush
 
 @push('scripts')
     <script src="/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+    <script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
     <script>
         $('#datepicker').datepicker({
             autoclose: true
-        })
+        });
+        $('.select2').select2();
+        CKEDITOR.replace( 'editor' );
     </script>
 @endpush
