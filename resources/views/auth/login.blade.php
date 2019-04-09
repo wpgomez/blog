@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Log in</title>
+  <title>{{ config('app.name') }} | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -30,13 +30,13 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"><b>Admin</b>LTE</a>
+    <a href="/">{{ config('app.name') }}</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Ingresa tus datos para iniciar sesión</p>
 
-    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+    <form class="form" method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
@@ -58,7 +58,7 @@
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
             <input type="password" 
                 class="form-control" 
-                placeholder="Password" 
+                placeholder="Contraseña" 
                 name="password" 
                 required>
             
@@ -74,13 +74,13 @@
             <div class="col-xs-8">
             <div class="checkbox icheck">
                 <label>
-                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Recuérdame
                 </label>
             </div>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
             </div>
             <!-- /.col -->
         </div>
@@ -95,7 +95,7 @@
     </div> --}}
     <!-- /.social-auth-links -->
 
-    <a href="{{ route('password.request') }}">I forgot my password</a><br>
+    <a href="{{ route('password.request') }}">Reestablecer contraseña</a><br>
 
   </div>
   <!-- /.login-box-body -->
