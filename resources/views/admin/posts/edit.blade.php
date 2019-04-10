@@ -14,8 +14,8 @@
 
 @section('content')
 <div class="row">
-    <form method="POST" action="{{ route('admin.posts.store') }}">
-        {{ csrf_field() }}
+    <form method="POST" action="{{ route('admin.posts.update', $post) }}">
+        {{ csrf_field() }} {{ method_field('PUT') }}
         <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-body">
@@ -23,14 +23,14 @@
                         <label>Título de la publicación</label>
                         <input name="title" 
                             class="form-control" 
-                            value="{{ old('title') }}"
+                            value="{{ old('title', $post->title) }}"
                             placeholder="Ingresa aqui el titulo de la publicación">
                         {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
                         <label>Contenido publicación</label>
                         <textarea rows="10" name="body" id="editor" class="form-control" 
-                            placeholder="Ingresa el contenido completo de la publicación">{{ old('body') }}</textarea>
+                            placeholder="Ingresa el contenido completo de la publicación">{{ old('body', $post->body) }}</textarea>
                         {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         </div>
                         <input name="published_at" 
                             type="text" 
-                            value="{{ old('published_at') }}"
+                            value="{{ old('published_at', $post->published_at ? $post->published_at->format('m/d/Y') : null) }}"
                             class="form-control pull-right" id="datepicker">
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             <option value="">Selecciona una categoría</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                    {{ old('category') == $category->id ? 'selected' : '' }}
+                                    {{ old('category', $post->category_id) == $category->id ? 'selected' : '' }}
                                 >{{ $category->name }}</option>
                             @endforeach
                         </select>
@@ -69,7 +69,7 @@
                             multiple="multiple" 
                             data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                             @foreach ($tags as $tag)
-                                <option {{ collect(old('tags'))->contains($tag->id) ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>    
+                                <option {{ collect(old('tags', $post->tags->pluck('id')))->contains($tag->id) ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>    
                             @endforeach
                         </select>
                         {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
@@ -77,7 +77,7 @@
                     <div class="form-group {{ $errors->has('excerpt') ? 'has-error' : '' }}">
                         <label>Extracto publicación</label>
                         <textarea name="excerpt" class="form-control" 
-                            placeholder="Ingresa un extracto de la publicación">{{ old('excerpt') }}</textarea>
+                            placeholder="Ingresa un extracto de la publicación">{{ old('excerpt', $post->excerpt) }}</textarea>
                         {!! $errors->first('excerpt', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-group">
