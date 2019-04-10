@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Photo;
 
 class PhotosController extends Controller
 {
@@ -14,8 +16,13 @@ class PhotosController extends Controller
             'photo' => 'required|image|max:2048',
         ]);
 
-        $photo = $request->file('photo');
+        $photo = $request->file('photo')->store('public');
+                
+        $photoUrl = Storage::url($photo);
 
-        return request()->all();
+        Photo::create([
+            'url' => $photoUrl,
+            'post_id' => $post->id,
+        ]);
     }
 }
