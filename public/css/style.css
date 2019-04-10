@@ -265,7 +265,6 @@ a.btn-bar{
 	position: absolute;
 	top: 18px;
 	right: 7px;
-	
 }
  
 .buttons-social-media-share {
@@ -281,4 +280,20 @@ a.btn-bar{
 	list-style-type: none;
 	float: left;
 	margin-right: 10px;
+}
+
+.overlay{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	color: white;
+	font-size: 30px;
+	background-color: rgba(0, 0, 0, .7);
+}
+
+.gallery-photos{
+	overflow: hidden;
 }
