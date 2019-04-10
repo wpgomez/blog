@@ -28,6 +28,26 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, ['title' => 'required']);
+
+        $post = Post::create([
+            'title' => $request->get('title'),
+            'url' => str_slug($request->get('title')),
+        ]);
+
+        return redirect()->route('admin.posts.edit', $post);
+    }
+
+    public function edit(Post $post)
+    {
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+    }
+
+    /* public function store(Request $request)
+    {
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -47,5 +67,5 @@ class PostsController extends Controller
         $post->tags()->attach($request->get('tags'));
 
         return back()->with('flash', 'Tu publicación ha sido creada');
-    }
+    } */
 }
