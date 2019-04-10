@@ -53,6 +53,7 @@ class PostsController extends Controller
             'body' => 'required',
             'category' => 'required',
             'excerpt' => 'required',
+            'tags' => 'required',
         ]);
                 
         $post->title = $request->get('title');
@@ -65,6 +66,6 @@ class PostsController extends Controller
 
         $post->tags()->sync($request->get('tags'));
 
-        return back()->with('flash', 'Tu publicación ha sido guardada');
+        return redirect()->route('admin.posts.edit', $post)->with('flash', 'Tu publicación ha sido guardada');
     }
 }
