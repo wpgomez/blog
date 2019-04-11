@@ -18,11 +18,11 @@ class Post extends Model
         return 'url';
     }
 
-    public function setTitleAttribute($value)
+    /* public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
         $this->attributes['url'] = str_slug($value);
-    }
+    } */
 
     public function setPublishedAtAttribute($value)
     {
@@ -76,5 +76,25 @@ class Post extends Model
 
             $post->photos->each->delete();
         });
+    }
+
+    public static function create(array $attributes = [])
+    {
+        $post = static::query()->create($attributes);
+
+        $post->generateUrl();
+
+        return $post;
+    }
+
+    public function generateUrl()
+    {
+        $url = str_slug($this->title);
+        if ($this->where('url', $url)->exists()) {
+            $url = "{$url}-{$this->id}";
+        }
+
+        $this->url = $url;
+        $this->save();
     }
 }
