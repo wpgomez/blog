@@ -28,7 +28,9 @@
                             <span class="c-gray-1">{{ $post->published_at->format('M d') }}</span>
                         </div>
                         <div class="post-category">
-                            <span class="category text-capitalize">{{ $post->category->name }}</span>
+                            <a href="{{ route('categories.show', $post->category) }}">
+                                <span class="category text-capitalize">{{ $post->category->name }}</span>
+                            </a>
                         </div>
                     </header>
                     <h1>{{ $post->title }}</h1>
@@ -36,7 +38,7 @@
                     <p>{{ $post->excerpt }}</p>
                     <footer class="container-flex space-between">
                         <div class="read-more">
-                        <a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer más</a>
+                        <a href="/blog/{{ $post->url }}" class="text-uppercase c-green">Leer más</a>
                         </div>
                         <div class="tags container-flex">
                             @foreach ($post->tags as $tag)
