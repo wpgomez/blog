@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'title', 'url', 'body', 'iframe', 'excerpt', 'published_at', 'category_id'
+    ];
     
     protected $dates = ['published_at'];
 
@@ -20,6 +22,18 @@ class Post extends Model
     {
         $this->attributes['title'] = $value;
         $this->attributes['url'] = str_slug($value);
+    }
+
+    public function setPublishedAtAttribute($value)
+    {
+        $this->attributes['published_at'] = $value ? Carbon::parse($value) : null;
+    }
+
+    public function setCategoryIdAttribute($value)
+    {
+        $this->attributes['category_id'] = Category::find($value)
+                                                ? $value 
+                                                : Category::create(['name' => $value])->id;
     }
 
     public function category()
@@ -42,5 +56,14 @@ class Post extends Model
         $query->whereNotnull('published_at')
                 ->where('published_at', '<=', Carbon::now())
                 ->latest('published_at');
+    }
+
+    public function syncTags($tags)
+    {
+        $tagsNew = collect($tags)->map(function($tag){
+            return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+        });
+
+        return $this->tags()->sync($tagsNew);
     }
 }
