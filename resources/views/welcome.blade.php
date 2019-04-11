@@ -2,6 +2,9 @@
 
 @section('content')
     <section class="posts container">
+        @if (isset($title))
+            <h3>{{ $title }}</h3>
+        @endif
         @foreach ($posts as $post)
             <article class="post">
                 @if ($post->photos->count() === 1)
@@ -42,7 +45,9 @@
                         </div>
                         <div class="tags container-flex">
                             @foreach ($post->tags as $tag)
-                            <span class="tag c-gray-1 text-capitalize">#{{ $tag->name }}</span>
+                                <span class="tag c-gray-1 text-capitalize">
+                                    <a href="{{ route('tags.show', $tag) }}">#{{ $tag->name }}</a>
+                                </span>
                             @endforeach
                         </div>
                     </footer>
@@ -52,11 +57,4 @@
     </section><!-- fin del div.posts.container -->
 
     {{ $posts->links() }}
-    {{-- <div class="pagination">
-        <ul class="list-unstyled container-flex space-center">
-            <li><a href="#" class="pagination-active">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-        </ul>
-    </div> --}}
 @endsection
