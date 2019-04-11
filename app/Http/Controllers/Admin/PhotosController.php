@@ -5,24 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use App\Photo;
 
 class PhotosController extends Controller
 {
-    public function store(Post $post, Request $request)
+    public function store(Post $post)
     {
-        $this->validate($request, [
+        $this->validate(request(), [
             'photo' => 'required|image|max:2048',
         ]);
 
-        $photo = $request->file('photo')->store('public');
-                
-        $photoUrl = Storage::url($photo);
-
-        Photo::create([
-            'url' => $photoUrl,
-            'post_id' => $post->id,
+        $post->photos()->create([
+            'url' => request()->file('photo')->store('posts', 'public'),
         ]);
     }
 
@@ -30,9 +24,7 @@ class PhotosController extends Controller
     {
         $photo->delete();
 
-        $photoPath = str_replace('storage', 'public', $photo->url);
-
-        Storage::delete($photoPath);
+        // Storage::disk('public')->delete($photo->url);
 
         return back()->with('flash', 'Foto eliminada');
     }
