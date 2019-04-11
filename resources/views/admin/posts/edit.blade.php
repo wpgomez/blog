@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                         <label>Categorías</label>
-                        <select name="category" class="form-control">
+                        <select name="category" class="form-control select2">
                             <option value="">Selecciona una categoría</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -138,7 +138,9 @@
         $('#datepicker').datepicker({
             autoclose: true
         });
-        $('.select2').select2();
+        $('.select2').select2({
+            tags: true
+        });
         CKEDITOR.replace( 'editor' );
         CKEDITOR.config.height = 315;
 

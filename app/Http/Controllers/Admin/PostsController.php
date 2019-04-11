@@ -48,6 +48,8 @@ class PostsController extends Controller
     
     public function update(Post $post, Request $request)
     {
+        //return $request;
+
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -61,11 +63,27 @@ class PostsController extends Controller
         $post->body = $request->get('body');
         $post->iframe = $request->get('iframe');
         $post->excerpt = $request->get('excerpt');
-        $post->published_at = $request->filled('published_at') ? Carbon::parse($request->get('published_at')) : null;
-        $post->category_id = $request->get('category');
+        $post->published_at = $request->filled('published_at') 
+                                ? Carbon::parse($request->get('published_at')) 
+                                : null;
+
+        $cat = $request->get('category');
+
+        $post->category_id = Category::find($cat)
+                                ? $cat 
+                                : Category::create(['name' => $cat])->id;
+
         $post->save();
 
-        $post->tags()->sync($request->get('tags'));
+        $tags = [];
+
+        foreach ($request->get('tags') as $tag) {
+            $tags[] = Tag::find($tag)
+                        ? $tag
+                        : Tag::create(['name' => $tag])->id;
+        }
+
+        $post->tags()->sync($tags);
 
         return redirect()->route('admin.posts.edit', $post)->with('flash', 'Tu publicación ha sido guardada');
     }
