@@ -8,7 +8,13 @@ class Tag extends Model
 {
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'url';
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['url'] = str_slug($value);
     }
 
     public function posts()
