@@ -54,6 +54,12 @@
                             placeholder="Ingresa el contenido completo de la publicación">{{ old('body', $post->body) }}</textarea>
                         {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                     </div>
+                    <div class="form-group {{ $errors->has('iframe') ? 'has-error' : '' }}">
+                        <label>Contenido embebido (iframe)</label>
+                        <textarea rows="3" name="iframe" id="editor" class="form-control" 
+                            placeholder="Ingresa contenido embebido (iframe)">{{ old('iframe', $post->iframe) }}</textarea>
+                        {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
+                    </div>
                 </div>
             </div>
         </div>
