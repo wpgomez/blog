@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'title', 'url', 'body', 'iframe', 'excerpt', 'published_at', 'category_id'
+        'title', 'url', 'body', 'iframe', 'excerpt', 'published_at', 'category_id', 'user_id'
     ];
     
     protected $dates = ['published_at'];
@@ -43,6 +43,11 @@ class Post extends Model
     public function photos()
     {
         return $this->hasMany(Photo::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function scopePublished($query)
