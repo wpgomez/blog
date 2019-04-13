@@ -6,7 +6,7 @@
         <li class="pure-menu-item">
             <a href="{{ route('pages.home')}}" 
                 class="pure-menu-link c-gris-2 text-uppercase {{ setActiveRoute('pages.home') }}">
-                Incio
+                Inicio
             </a>
         </li>
         <li class="pure-menu-item">

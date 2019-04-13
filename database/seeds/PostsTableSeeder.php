@@ -41,6 +41,7 @@ class PostsTableSeeder extends Seeder
         $post->url = str_slug($post->title);
         $post->excerpt = "Extracto de mi tercer post";
         $post->body = "<p>Contenido de mi tercer post</p>";
+        $post->iframe = "<iframe width='100%' height='480' src='https://www.youtube.com/embed/1B3Zc6Be4pM' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
         $post->published_at = Carbon::now()->subDays(5);
         $post->category_id = 1;
         $post->save();
@@ -59,6 +60,7 @@ class PostsTableSeeder extends Seeder
         $post->url = str_slug($post->title);
         $post->excerpt = "Extracto de mi quinto post";
         $post->body = "<p>Contenido de mi quinto post</p>";
+        $post->iframe = "<iframe width='100%' height='480' src='https://www.youtube.com/embed/1B3Zc6Be4pM' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
         $post->published_at = Carbon::now()->subDays(3);
         $post->category_id = 3;
         $post->save();
@@ -69,7 +71,7 @@ class PostsTableSeeder extends Seeder
         $post->excerpt = "Extracto de mi sexto post";
         $post->body = "<p>Contenido de mi sexto post</p>";
         $post->published_at = Carbon::now()->subDays(2);
-        $post->category_id = 3;
+        $post->category_id = 2;
         $post->save();
 
         $post = new Post;

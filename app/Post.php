@@ -17,13 +17,7 @@ class Post extends Model
     {
         return 'url';
     }
-
-    /* public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = $value;
-        $this->attributes['url'] = str_slug($value);
-    } */
-
+    
     public function setPublishedAtAttribute($value)
     {
         $this->attributes['published_at'] = $value ? Carbon::parse($value) : null;
@@ -96,5 +90,10 @@ class Post extends Model
 
         $this->url = $url;
         $this->save();
+    }
+
+    public function isPublished()
+    {
+        return (bool) $this->published_at && $this->published_at < today();
     }
 }

@@ -19,6 +19,14 @@ class PostTagTableSeeder extends Seeder
             'tag_id' => 1,
         ]);
         DB::table('post_tag')->insert([
+            'post_id' => 2,
+            'tag_id' => 2,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 2,
+            'tag_id' => 3,
+        ]);
+        DB::table('post_tag')->insert([
             'post_id' => 3,
             'tag_id' => 1,
         ]);
@@ -37,6 +45,26 @@ class PostTagTableSeeder extends Seeder
         DB::table('post_tag')->insert([
             'post_id' => 4,
             'tag_id' => 3,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 5,
+            'tag_id' => 1,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 5,
+            'tag_id' => 2,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 6,
+            'tag_id' => 2,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 7,
+            'tag_id' => 1,
+        ]);
+        DB::table('post_tag')->insert([
+            'post_id' => 7,
+            'tag_id' => 2,
         ]);
     }
 }
