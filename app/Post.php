@@ -57,6 +57,15 @@ class Post extends Model
                 ->latest('published_at');
     }
 
+    public function scopeAllowed($query)
+    {
+        if ( auth()->user()->hasRole('Admin') ) {
+            return $query;
+        }
+            
+        return $query->where('user_id', auth()->id());
+    }
+
     public function syncTags($tags)
     {
         $tagsNew = collect($tags)->map(function($tag){
