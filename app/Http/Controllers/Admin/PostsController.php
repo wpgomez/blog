@@ -14,29 +14,38 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        //$posts = Post::all();
+        //$posts = Post::where('user_id', auth()->id())->get();
+        $posts = auth()->user()->posts;
 
         return view('admin.posts.index', compact('posts'));
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', new Post);
+
         $this->validate($request, ['title' => 'required|min:3']);
 
-        $post = Post::create([
-            'title' => $request->get('title'),
-            'user_id' => auth()->id(),
-        ]);
+        $post = Post::create( $request->all() );
+
+        // $post = Post::create([
+        //     'title' => $request->get('title'),
+        //     'user_id' => auth()->id(),
+        // ]);
 
         return redirect()->route('admin.posts.edit', $post);
     }
 
     public function edit(Post $post)
     {
-        $categories = Category::all();
-        $tags = Tag::all();
+        $this->authorize('view', $post);
 
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'tags' => Tag::all(),
+            'categories' => Category::all(),
+        ]);
     }
     
     public function update(Post $post, StorePostRequest $request)
@@ -48,6 +57,8 @@ class PostsController extends Controller
         $post->published_at = $request->get('published_at'); 
         $post->category_id = $request->get('category_id');
         $post->save(); */
+
+        $this->authorize('update', $post);
 
         $post->update($request->all());
 
@@ -65,6 +76,7 @@ class PostsController extends Controller
         foreach ($post->photos as $photo) {
             $photo->delete();
         } */
+        $this->authorize('delete', $post);
 
         $post->delete();
 
